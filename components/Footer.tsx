@@ -1,38 +1,29 @@
 export default function Footer() {
   return (
-    <footer className="bg-[#1C4E80] text-white py-12 mt-20">
-      <div className="max-w-6xl mx-auto px-6 grid md:grid-cols-3 gap-8">
+    <footer className="section-bg mt-20 py-12 px-6">
+      <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-10">
 
-        {/* Clinic Info */}
         <div>
-          <h3 className="text-xl font-bold mb-3">AesthetiQ Dental Clinic</h3>
-          <p className="text-white/90">
-            Premium, ethical and luxury dental care in Chennai.
-          </p>
+          <h3 className="text-2xl font-bold text-[#1C4E80] mb-4">
+            AesthetiQ Dental Clinic
+          </h3>
+          <p>Jafferkhanpet, Chennai</p>
+          <p>Phone: 8667087095</p>
+          <p>Email: aesthetiqchennai@gmail.com</p>
         </div>
 
-        {/* Contact */}
-        <div>
-          <h3 className="text-xl font-bold mb-3">Contact</h3>
-          <p>📍 Jafferkhanpet, Chennai</p>
-          <p>📞 8667087095</p>
-          <p>✉️ aesthetiqchennai@gmail.com</p>
-        </div>
-
-        {/* Map */}
-        <div>
-          <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!..."
-            width="100%"
-            height="150"
-            className="rounded-lg"
-            loading="lazy"
-          ></iframe>
-        </div>
+        <iframe
+          src="YOUR_GOOGLE_MAPS_EMBED_URL"
+          width="100%"
+          height="220"
+          loading="lazy"
+          allowFullScreen
+          className="rounded-xl shadow-lg"
+        ></iframe>
       </div>
 
-      <p className="text-center text-white/60 mt-10">
-        © {new Date().getFullYear()} AesthetiQ Dental Clinic — All Rights Reserved.
+      <p className="text-center text-gray-600 mt-10">
+        © {new Date().getFullYear()} AesthetiQ Dental Clinic. All rights reserved.
       </p>
     </footer>
   );

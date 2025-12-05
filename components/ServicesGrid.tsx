@@ -1,35 +1,35 @@
+import Link from "next/link";
+
 const services = [
-  "Root Canal Treatment",
-  "Tooth Extractions",
-  "Dental Implants",
-  "Aligners & Braces",
-  "Pediatric Dentistry",
-  "Gum Treatments",
-  "Smile Design",
-  "Full Mouth Rehabilitation",
-  "Prosthodontics",
-  "Cosmetic Dentistry"
+  { slug: "root-canal", title: "Root Canal" },
+  { slug: "extractions", title: "Extractions" },
+  { slug: "implants", title: "Implants" },
+  { slug: "aligners", title: "Aligners" },
+  { slug: "pediatric-dentistry", title: "Pediatric Dentistry" },
+  { slug: "gum-problems", title: "Gum Treatment" },
+  { slug: "smile-design", title: "Smile Design" },
+  { slug: "full-mouth-restoration", title: "Full Mouth Restoration" },
+  { slug: "prosthodontics", title: "Prosthodontics" },
+  { slug: "cosmetic-dentistry", title: "Cosmetic Dentistry" },
 ];
 
 export default function ServicesGrid() {
   return (
-    <section id="services" className="py-20 bg-[#F3F6FA]">
-      <div className="max-w-6xl mx-auto px-6">
-        <h2 className="text-3xl font-bold text-[#1C4E80] mb-10 text-center">
-          Our Dental Services
-        </h2>
+    <section className="max-w-6xl mx-auto px-6 py-20">
+      <h2 className="text-3xl font-bold text-[#1C4E80] mb-10 text-center">
+        Our Services
+      </h2>
 
-        <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-6">
-          {services.map((s, index) => (
-            <a
-              key={index}
-              href={`/services/${s.toLowerCase().replace(/ /g, "-")}`}
-              className="bg-white shadow-md p-6 rounded-lg border border-gray-100 hover:shadow-xl hover:border-[#D4AF37]/40 transition"
-            >
-              <p className="text-lg font-semibold text-[#1C4E80]">{s}</p>
-            </a>
-          ))}
-        </div>
+      <div className="grid grid-cols-2 md:grid-cols-5 gap-5">
+        {services.map((s) => (
+          <Link
+            key={s.slug}
+            href={`/services/${s.slug}`}
+            className="section-bg p-6 text-center rounded-xl shadow hover:shadow-lg transition"
+          >
+            <span className="font-semibold text-[#1C4E80]">{s.title}</span>
+          </Link>
+        ))}
       </div>
     </section>
   );

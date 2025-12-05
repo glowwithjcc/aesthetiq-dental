@@ -1,89 +1,96 @@
-import Schema from "@/components/Schema";
 import type { Metadata } from "next";
 
 const serviceData: Record<string, any> = {
   "root-canal": {
     title: "Root Canal Treatment",
-    description: "Painless RCT with advanced rotary endodontics.",
+    subtitle: "Painless RCT with digital precision",
+    description:
+      "We use rotary endodontics, digital apex locators and microscope-assisted techniques for smooth, pain-free RCTs.",
   },
   "extractions": {
     title: "Tooth Extractions",
-    description: "Safe, quick and minimally invasive tooth removal.",
+    subtitle: "Safe, gentle and minimally invasive",
+    description:
+      "Most extractions are quick, painless and performed using modern anaesthesia.",
   },
   "implants": {
     title: "Dental Implants",
-    description: "Permanent titanium implants for confident smiles.",
+    subtitle: "Titanium implants for lifetime confidence",
+    description:
+      "Advanced implant systems with guided placement and 3D imaging.",
   },
   "aligners": {
     title: "Aligners & Braces",
-    description: "Invisible aligners and braces for perfect alignment.",
+    subtitle: "Invisible comfort, perfect teeth",
+    description:
+      "Clear aligners for those wanting subtle, effective orthodontics.",
   },
   "pediatric-dentistry": {
     title: "Pediatric Dentistry",
-    description: "Child-friendly dental care for happy, healthy teeth.",
+    subtitle: "Where kids feel safe and happy",
+    description:
+      "Child-friendly care designed to ease anxiety and build healthy habits.",
   },
   "gum-problems": {
     title: "Gum Treatment",
-    description: "LASER gum therapy and periodontal treatments.",
+    subtitle: "Precision periodontal care",
+    description:
+      "Laser gum therapy, deep cleaning and advanced periodontal care.",
   },
   "smile-design": {
     title: "Smile Design",
-    description: "Hollywood smile transformations with veneers & bonding.",
+    subtitle: "Your dream smile, beautifully crafted",
+    description:
+      "Digital smile design, veneers, bonding and cosmetic artistry.",
   },
   "full-mouth-restoration": {
     title: "Full Mouth Rehabilitation",
-    description: "Complete reconstruction of worn or damaged teeth.",
+    subtitle: "Total reconstruction for damaged teeth",
+    description:
+      "Rebuilding function and aesthetics with careful planning.",
   },
   "prosthodontics": {
     title: "Prosthodontics",
-    description: "Crowns, bridges and dentures crafted with precision.",
+    subtitle: "Crowns, bridges & dentures done right",
+    description:
+      "Aesthetic ceramic crowns, implant prosthetics and precision dentures.",
   },
   "cosmetic-dentistry": {
     title: "Cosmetic Dentistry",
-    description: "Teeth whitening, veneers and aesthetic corrections.",
+    subtitle: "Aesthetic transformations",
+    description:
+      "Teeth whitening, veneer artistry, cosmetic contouring.",
   },
 };
 
-export async function generateMetadata({ params }: any): Promise<Metadata> {
-  const service = serviceData[params.slug];
+export async function generateMetadata(props: any): Promise<Metadata> {
+  const { slug } = await props.params;
+  const s = serviceData[slug];
+
   return {
-    title: `${service.title} | AesthetiQ Dental Clinic`,
-    description: service.description,
+    title: `${s.title} | AesthetiQ Dental Clinic`,
+    description: s.description,
   };
 }
 
-export default function ServicePage({ params }: any) {
-  const service = serviceData[params.slug];
-
-  if (!service) return <div className="p-10 text-center">Service Not Found</div>;
+export default async function ServicePage(props: any) {
+  const { slug } = await props.params;
+  const s = serviceData[slug];
 
   return (
-    <><div className="max-w-5xl mx-auto px-6 py-20">
-          <h1 className="text-4xl font-bold text-[#1C4E80] mb-6">{service.title}</h1>
-          <p className="text-lg text-gray-700 leading-relaxed mb-10">
-              {service.description}
-          </p>
+    <div className="max-w-5xl mx-auto px-6 py-20">
 
-          <div className="bg-[#F3F6FA] p-8 rounded-xl shadow">
-              <h2 className="text-2xl font-semibold text-[#1C4E80] mb-3">
-                  Why Choose AesthetiQ?
-              </h2>
-              <ul className="list-disc pl-6 text-gray-700 space-y-2">
-                  <li>Modern equipment & sterilization protocols</li>
-                  <li>Ethical, pain-free treatment experience</li>
-                  <li>Dr. Praveena Devi’s expertise in advanced care</li>
-                  <li>Premium clinic ambience with personalised care</li>
-              </ul>
-          </div>
-      </div><Schema data={{
-          "@context": "https://schema.org",
-          "@type": "Dentist",
-          name: service.title,
-          url: `https://aesthetiq.in/services/${params.slug}`,
-          address: "Jafferkhanpet, Chennai",
-          telephone: "8667087095"
-      }} /></>
+      {/* HERO BLOCK */}
+      <div className="section-bg rounded-2xl p-12 shadow-xl mb-10">
+        <h1 className="text-4xl font-bold text-[#1C4E80]">{s.title}</h1>
+        <p className="text-lg text-gray-600 mt-3">{s.subtitle}</p>
+      </div>
 
+      {/* DESCRIPTION */}
+      <div className="bg-white p-10 shadow-xl rounded-2xl leading-relaxed text-gray-700">
+        {s.description}
+      </div>
+
+    </div>
   );
-  
 }
