@@ -1,78 +1,117 @@
 "use client";
 
-import Image from "next/image";
+import { motion } from "framer-motion";
 import { useState } from "react";
 
 const cases = [
-  { before: "/gallery/b1.jpg", after: "/gallery/a1.jpg" },
-  { before: "/gallery/b2.jpg", after: "/gallery/a2.jpg" },
-  { before: "/gallery/b3.jpg", after: "/gallery/a3.jpg" },
+  { before: "/before-after/case1-before.jpg", after: "/before-after/case1-after.jpg" },
+  { before: "/before-after/case2-before.jpg", after: "/before-after/case2-after.jpg" },
+  { before: "/before-after/case3-before.jpg", after: "/before-after/case3-after.jpg" },
+  { before: "/before-after/case4-before.jpg", after: "/before-after/case4-after.jpg" },
+  { before: "/before-after/case5-before.jpg", after: "/before-after/case5-after.jpg" },
 ];
 
-export default function BeforeAfterGrid() {
-  const [open, setOpen] = useState(false);
-  const [selected, setSelected] = useState<any>(null);
+export default function BeforeAfterSection() {
+  return (
+    <section
+      className="relative py-32 overflow-hidden"
+      style={{
+        backgroundImage: "url('/patterns/before-after-bg.jpg')",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+      }}
+    >
+      {/* Frost Layer */}
+      <div className="absolute inset-0 bg-black/10 backdrop-blur-[2px]" />
+
+      {/* Heading */}
+      <motion.h2
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1 }}
+        className="text-center text-4xl font-extrabold text-gray-900 relative z-10 mb-16"
+      >
+        Before <span className="text-blue-600">&</span> After
+      </motion.h2>
+
+      {/* CENTERED WRAPPER */}
+      <div className="relative z-10 max-w-6xl mx-auto px-6 flex flex-wrap justify-center gap-14">
+        {cases.map((item, index) => (
+          <RevealCard item={item} index={index} key={index} />
+        ))}
+      </div>
+    </section>
+  );
+}
+
+
+
+function RevealCard({ item, index }: any) {
+  const [slider, setSlider] = useState(50);
 
   return (
-    <section className="py-20 bg-white">
-      <div className="max-w-6xl mx-auto px-6">
-        <h2 className="text-3xl font-bold text-[#1C4E80] mb-10 text-center">
-          Before & After Results
-        </h2>
+    <motion.div
+      initial={{ opacity: 0, y: 40 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.7, delay: index * 0.15 }}
+      className="relative w-[340px] h-[420px] rounded-2xl overflow-hidden shadow-2xl 
+      border border-white/40 backdrop-blur-md bg-white/30 group"
+    >
+      {/* GOLD AURA */}
+      <motion.div
+        className="absolute inset-0 bg-yellow-300/10 blur-xl -z-10"
+        animate={{ opacity: [0.15, 0.4, 0.15] }}
+        transition={{ duration: 5, repeat: Infinity }}
+      />
 
-        <div className="grid md:grid-cols-3 gap-8">
-          {cases.map((c, index) => (
-            <div
-              key={index}
-              className="cursor-pointer group"
-              onClick={() => {
-                setSelected(c);
-                setOpen(true);
-              }}
-            >
-              <div className="relative w-full h-64">
-                <Image
-                  src={c.after}
-                  alt="After"
-                  fill
-                  className="object-cover rounded-lg shadow-md group-hover:scale-[1.02] transition"
-                />
-              </div>
-            </div>
-          ))}
-        </div>
+      {/* Light Sweep */}
+      <motion.div
+        initial={{ x: "-120%" }}
+        whileHover={{ x: "140%" }}
+        transition={{ duration: 1.4, ease: "easeOut" }}
+        className="absolute inset-y-0 w-24 bg-gradient-to-r 
+        from-transparent via-white/40 to-transparent blur-2xl z-20 pointer-events-none"
+      />
+
+      {/* BEFORE IMAGE */}
+      <img
+        src={item.before}
+        className="absolute inset-0 w-full h-full object-cover 
+        group-hover:scale-[1.07] transition-transform duration-700"
+      />
+
+      {/* AFTER IMAGE REVEAL (slider controlled) */}
+      <img
+        src={item.after}
+        className="absolute inset-0 h-full object-cover 
+        group-hover:scale-[1.07] transition-transform duration-700"
+        style={{
+          width: `${slider}%`,
+          overflow: "hidden",
+          clipPath: `inset(0 ${100 - slider}% 0 0)`,
+        }}
+      />
+
+      {/* LABELS */}
+      <div className="absolute bottom-3 left-3 bg-black/60 text-white text-xs px-3 py-1 rounded-full z-30">
+        BEFORE
       </div>
 
-      {/* POPUP */}
-      {open && selected && (
-        <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 px-4">
-          <div className="bg-white rounded-xl p-6 max-w-3xl w-full shadow-xl">
-            <div className="grid grid-cols-2 gap-4">
-              <Image
-                src={selected.before}
-                width={400}
-                height={400}
-                alt="Before"
-                className="rounded-lg object-cover"
-              />
-              <Image
-                src={selected.after}
-                width={400}
-                height={400}
-                alt="After"
-                className="rounded-lg object-cover"
-              />
-            </div>
+      <div className="absolute bottom-3 right-3 bg-blue-600 text-white text-xs px-3 py-1 rounded-full z-30">
+        AFTER
+      </div>
 
-            <button
-              className="mt-6 px-6 py-2 bg-[#1C4E80] text-white rounded-lg w-full"
-              onClick={() => setOpen(false)}
-            >
-              Close
-            </button>
-          </div>
-        </div>
-      )}
-    </section>
+      {/* DRAG SLIDER */}
+      <input
+        type="range"
+        min={0}
+        max={100}
+        value={slider}
+        onChange={(e) => setSlider(Number(e.target.value))}
+        className="absolute bottom-4 left-1/2 -translate-x-1/2 w-[80%] z-30 
+        accent-blue-600 cursor-pointer"
+      />
+    </motion.div>
   );
 }
