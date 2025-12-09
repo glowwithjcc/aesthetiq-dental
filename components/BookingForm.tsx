@@ -3,107 +3,120 @@
 import { useState } from "react";
 
 export default function BookingForm() {
-  const [loading, setLoading] = useState(false);
-  const [done, setDone] = useState(false);
+  const [name, setName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [service, setService] = useState("");
+  const [date, setDate] = useState("");
+  const [submitted, setSubmitted] = useState(false);
 
-  async function handleSubmit(e: any) {
-    e.preventDefault();
-    setLoading(true);
+  const whatsappNumber = "8667087095";
 
-    const formData = Object.fromEntries(new FormData(e.target));
+  const sendToWhatsapp = async () => {
+  const message = `🦷 *New Booking Enquiry*  
+Name: ${name}
+Phone: ${phone}
+Service: ${service}
+Preferred Date: ${date}`;
 
-    const res = await fetch("/api/book", {
-      method: "POST",
-      body: JSON.stringify(formData),
-    });
+  // WhatsApp open link
+  const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(
+    message
+  )}`;
 
-    setLoading(false);
-    setDone(res.ok);
-  }
+  window.open(url, "_blank");
+
+  // Send to Google Sheet webhook
+  await fetch("https://script.google.com/macros/s/AKfycbyykfRqaX_ZXLhQMa3kP02UJUARS6ibUljWD-1ERtx9_uOSWvXVnUfzO8x1Rbn45xXc8Q/exechttps://script.google.com/macros/s/AKfycby4oV_HNyUKFziaAVpyoTv2NTuVF4kmxzMipqCzg-Lw3yrXvplNJPHZCB6fBQDcZCWjVQ/exec", {
+    method: "POST",
+    body: JSON.stringify({
+      name,
+      phone,
+      service,
+      date,
+    }),
+  });
+
+  setSubmitted(true);
+};
+
 
   return (
-    <section id="booking" className="py-20 bg-[#F3F6FA]">
-      <div className="max-w-3xl mx-auto px-6">
-        <h2 className="text-3xl font-bold text-[#1C4E80] text-center mb-10">
-          Book Your Consultation
+    <section
+      className="relative py-20 px-6 bg-cover bg-center"
+      style={{ backgroundImage: "url('/emerald-marble.jpg')" }}
+    >
+      <div className="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
+
+      <div className="relative max-w-xl mx-auto bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl p-8 shadow-2xl">
+        <h2 className="text-center text-3xl font-bold text-yellow-300 mb-6 drop-shadow-lg">
+          Book an Appointment
         </h2>
 
-        <form
-          onSubmit={handleSubmit}
-          className="bg-white p-8 rounded-xl shadow-lg grid gap-6"
-        >
-          <div>
-            <label className="block text-sm font-semibold text-[#1C4E80]">
-              Full Name
-            </label>
-            <input
-              type="text"
-              name="name"
-              required
-              className="mt-1 w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-[#1C4E80]"
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm font-semibold text-[#1C4E80]">
-              Phone Number
-            </label>
-            <input
-              type="text"
-              name="phone"
-              required
-              className="mt-1 w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-[#1C4E80]"
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm font-semibold text-[#1C4E80]">
-              Email Address
-            </label>
-            <input
-              type="email"
-              name="email"
-              required
-              className="mt-1 w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-[#1C4E80]"
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm font-semibold text-[#1C4E80]">
-              Preferred Date & Time
-            </label>
-            <input
-              type="datetime-local"
-              name="date"
-              required
-              className="mt-1 w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-[#1C4E80]"
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm font-semibold text-[#1C4E80]">
-              Message / Dental Concern
-            </label>
-            <textarea
-              name="message"
-              rows={4}
-              className="mt-1 w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-[#1C4E80]"
-            ></textarea>
-          </div>
-
-          <button
-            disabled={loading}
-            className="bg-[#1C4E80] text-white font-semibold py-3 rounded-lg shadow-md hover:bg-[#163A60] transition"
+        {!submitted ? (
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              sendToWhatsapp();
+            }}
+            className="space-y-4"
           >
-            {loading ? "Booking..." : "Submit"}
-          </button>
+            <input
+              type="text"
+              placeholder="Your Name"
+              className="w-full p-3 rounded-lg bg-white/20 text-white placeholder-white/70 border border-white/30"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              required
+            />
 
-          {done && (
-            <p className="text-green-600 text-center font-semibold">
-              Appointment request sent successfully!
+            <input
+              type="tel"
+              placeholder="Phone Number"
+              className="w-full p-3 rounded-lg bg-white/20 text-white placeholder-white/70 border border-white/30"
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+              required
+            />
+
+            <select
+              className="w-full p-3 rounded-lg bg-white/20 text-white border border-white/30"
+              value={service}
+              onChange={(e) => setService(e.target.value)}
+              required
+            >
+              <option value="">Select Service</option>
+              <option>Dental Cleaning</option>
+              <option>Root Canal</option>
+              <option>Braces / Aligners</option>
+              <option>Dental Implants</option>
+              <option>Cosmetic Dentistry</option>
+            </select>
+
+            <input
+              type="date"
+              className="w-full p-3 rounded-lg bg-white/20 text-white border border-white/30"
+              value={date}
+              onChange={(e) => setDate(e.target.value)}
+              required
+            />
+
+            <button
+              type="submit"
+              className="w-full py-3 bg-yellow-300 text-black font-bold rounded-xl shadow-lg hover:bg-yellow-400 transition"
+            >
+              Send to WhatsApp
+            </button>
+          </form>
+        ) : (
+          <div className="text-center text-white">
+            <h3 className="text-xl font-semibold text-yellow-300 mb-2">
+              Booking Sent!
+            </h3>
+            <p className="opacity-80">
+              You will receive a confirmation shortly on WhatsApp.
             </p>
-          )}
-        </form>
+          </div>
+        )}
       </div>
     </section>
   );

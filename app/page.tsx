@@ -7,8 +7,9 @@ import TestimonialScroller from "@/components/TestimonialScroller";
 import BookingForm from "@/components/BookingForm";
 import Footer from "@/components/Footer";
 import WhatsAppFloat from "@/components/WhatsAppFloat";
+import ReviewMarquee from "@/components/ReviewMarquee";
 import FaqBot from "@/components/FaqBot";
-
+import FloatingBookNow from "@/components/FloatingBookNow"
 export default function Home() {
   return (
     <main>
@@ -18,7 +19,10 @@ export default function Home() {
       <InstaSlider />
       <BeforeAfterGrid />
       <TestimonialScroller />
-      <BookingForm />
+      <ReviewMarquee />
+      <BookingForm/>
+<FloatingBookNow />
+
       <Footer />
       <WhatsAppFloat />
       <FaqBot />
