@@ -16,6 +16,14 @@
     --foreground: #ededed;
   }
 }
+@keyframes pan {
+  0% { background-position: 0 0; }
+  100% { background-position: 300px 0; }
+}
+
+.animate-pan {
+  animation: pan 40s linear infinite;
+}
 
 body {
   background: linear-gradient(135deg, #f7fbff, #eef4fb);

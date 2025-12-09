@@ -56,9 +56,9 @@ export default function TestimonialScroller() {
         {[...reviews, ...reviews].map((r, index) => (
           <div
             key={index}
-            className="min-w-[300px] bg-[#F3F6FA] p-6 rounded-xl shadow-md border border-gray-200"
+            className="min-w-[450px] bg-[#F3F6FA] p-6 rounded-xl shadow-md border border-gray-200"
           >
-            <div className="flex text-yellow-400 mb-2">
+            <div className="flex text-white-400 mb-2">
               {[...Array(5)].map((_, i) => (
                 <MdStar key={i} size={20} />
               ))}
