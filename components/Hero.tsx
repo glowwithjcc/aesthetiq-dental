@@ -3,8 +3,8 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useEffect, useState } from "react";
 
-export default function Hero() {
-  const [mounted, setMounted] = useState(false);
+export default function Hero({ onOpenBooking }: { onOpenBooking: () => void }) {
+
 
   // Scroll Parallax
   const { scrollY } = useScroll();
@@ -16,7 +16,6 @@ export default function Hero() {
   const [cursor, setCursor] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
-    setMounted(true);
     window.addEventListener("mousemove", (e) => {
       setCursor({
         x: (e.clientX / window.innerWidth - 0.5) * 20,
@@ -116,18 +115,17 @@ export default function Hero() {
           transition={{ delay: 0.8, duration: 1 }}
         >
           <motion.button
-            onClick={() =>
-              document.getElementById("booking-modal-btn")?.click()
-            }
-            whileHover={{ scale: 1.06 }}
-            whileTap={{ scale: 0.97 }}
-            className="px-10 py-4 bg-white/10 border border-white/30 backdrop-blur-md 
-                       text-white rounded-xl shadow-lg hover:bg-white/20 transition relative overflow-hidden"
-          >
-            <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent 
-                             translate-x-[-100%] hover:translate-x-[100%] transition duration-700"></span>
-            Book Appointment
-          </motion.button>
+  onClick={onOpenBooking}
+  whileHover={{ scale: 1.06 }}
+  whileTap={{ scale: 0.97 }}
+  className="px-10 py-4 bg-white/10 border border-white/30 backdrop-blur-md 
+             text-white rounded-xl shadow-lg hover:bg-white/20 transition relative overflow-hidden"
+>
+  <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent 
+                   translate-x-[-100%] hover:translate-x-[100%] transition duration-700"></span>
+  Book Appointment
+</motion.button>
+
         </motion.div>
       </motion.div>
     </section>

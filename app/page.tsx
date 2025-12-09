@@ -1,3 +1,5 @@
+"use client";
+
 import Hero from "@/components/Hero";
 import IntroPraveena from "@/components/IntroPraveena";
 import ServicesGrid from "@/components/ServicesGrid";
@@ -10,10 +12,23 @@ import WhatsAppFloat from "@/components/WhatsAppFloat";
 import ReviewMarquee from "@/components/ReviewMarquee";
 import FaqBot from "@/components/FaqBot";
 import FloatingBookNow from "@/components/FloatingBookNow"
+import BookingModal from "@/components/BookingModal";
+import { useState } from "react";
 export default function Home() {
+  const [isBookingOpen, setIsBookingOpen] = useState(false);
+
+  const handleBookingSubmit = async (data: any) => {
+    await fetch("/api/submitBooking", {
+      method: "POST",
+      body: JSON.stringify(data),
+    });
+
+    setIsBookingOpen(false);
+  };
+
   return (
     <main>
-      <Hero />
+      <Hero onOpenBooking={() => setIsBookingOpen(true)} />
       <IntroPraveena />
       <ServicesGrid />
       <InstaSlider />
@@ -22,7 +37,11 @@ export default function Home() {
       <ReviewMarquee />
       <BookingForm/>
 <FloatingBookNow />
-
+  <BookingModal
+        isOpen={isBookingOpen}
+        onClose={() => setIsBookingOpen(false)}
+        onSubmit={handleBookingSubmit}
+      />
       <Footer />
       <WhatsAppFloat />
       <FaqBot />
