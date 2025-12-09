@@ -1,13 +1,15 @@
 import PageTransition from "@/components/PageTransition";
 import "./globals.css";
-import BookingModal from "@/components/BookingModal";
-
+import { BookingProvider } from "@/components/BookingContext";
+import { Analytics } from "@vercel/analytics/react";
 export default function RootLayout({ children }: any) {
   return (
-    <html lang="en">
+   <html lang="en">
       <body>
-        <BookingModal />
-        <PageTransition>{children}</PageTransition>
+        <BookingProvider>
+          {children}
+        </BookingProvider>
+         <Analytics />
       </body>
     </html>
   );

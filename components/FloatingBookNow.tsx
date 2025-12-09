@@ -1,12 +1,10 @@
-"use client";
-
-export default function FloatingBookNow() {
+export default function FloatingBookNow({ onClick }: { onClick: () => void }) {
   return (
-    <a
-      href="#booking-form"
-      className="fixed top-6 right-6 bg-yellow-300 text-black font-bold px-6 py-3 rounded-full shadow-xl hover:bg-yellow-400 transition z-50"
+    <button
+      onClick={onClick}
+      className="fixed top-6 right-6 bg-yellow-400 text-black px-6 py-3 rounded-full shadow-xl z-50"
     >
-      BOOK NOW
-    </a>
+      Book Now
+    </button>
   );
 }

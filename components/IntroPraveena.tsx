@@ -154,7 +154,7 @@ export default function IntroPraveena() {
 
           <p className="mt-6 text-gray-700 leading-relaxed text-lg">
             Dr. Praveena blends <span className="font-semibold text-blue-700">clinical precision</span>
-            with a gentle patient-first approach, specialising in gum therapy, implants, and smile aesthetics.
+             with a gentle patient-first approach, specialising in gum therapy, implants, and smile aesthetics.
           </p>
 
           <p className="mt-4 text-gray-700 leading-relaxed">
@@ -177,15 +177,7 @@ export default function IntroPraveena() {
             </motion.li>
           </ul>
 
-          {/* CTA */}
-          <motion.button
-            onClick={() => document.getElementById("booking-modal-btn")?.click()}
-            className="mt-8 px-8 py-3 bg-blue-600 text-white rounded-xl shadow-md hover:bg-blue-700 transition"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            Book Consultation
-          </motion.button>
+          
         </motion.div>
 
       </div>

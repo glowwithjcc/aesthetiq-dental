@@ -40,7 +40,7 @@ export default function ServicesSection() {
       </motion.h2>
 
       {/* Grid */}
-      <div className="relative max-w-7xl mx-auto px-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-14 place-items-center z-10">
+      <div className="relative max-w-7xl mx-auto px-6 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-14 place-items-center z-10">
 
         {services.map((service, index) => (
           <Link
